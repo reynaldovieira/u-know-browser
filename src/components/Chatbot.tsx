@@ -360,7 +360,7 @@ const Chatbot = () => {
     setAudioMessage("");
   };
 
-  const logoUrl: string = "./src/assets/logo-u-know.svg";
+  const logoUrl: string = "./logo-u-know.svg";
 
   return (
     <>
