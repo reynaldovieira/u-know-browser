@@ -1,0 +1,19 @@
+.rcw-widget-container {
+  max-width: 31rem;
+}
+
+.rcw-message-img {
+  max-width: 200px;
+}
+.rcw-conversation-container {
+  min-width: 500px;
+}
+
+.rcw-response .rcw-message-text {
+  max-width: 360px;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
