@@ -17,7 +17,7 @@ import { PurchaseRequest } from "../services/purchaseRequest.service";
 import { PurchaseStatus } from "../services/purchases.service";
 import { QualifyProvider } from "../services/providers.service";
 import "./Chatbot.scss";
-import catalog from "../assets/base.json";
+// import catalog from "../assets/base.json";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const openai = new OpenAI({
@@ -77,11 +77,10 @@ const handleRequiresAction = async (run: any): Promise<any> => {
             };
           } else if (tool.function.name === "get_status_pr") {
             const args = JSON.parse(tool.function.arguments);
-            // const output = await PurchaseStatus({ pr: args.pr });
+            const output = await PurchaseStatus({ pr: args.pr });
             return {
               tool_call_id: tool.id,
-              output:
-                "Responder con la exata sentenza: El estado del pedido PR3333 es 'Composing', es decir, el pedido aún está siendo elaborado y no ha sido enviado para aprobación.",
+              output,
             };
           } else if (tool.function.name === "info_supplier") {
             const args = JSON.parse(tool.function.arguments);
