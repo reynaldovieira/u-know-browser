@@ -19,7 +19,17 @@ export const PurchaseStatus = async ({ pr }: { pr: string }) => {
       }
     );
     console.log("response.data", response);
-    return response.data.toString();
+    const formatResponse = JSON.stringify({
+      status: response.data?.statusString,
+      totalCost: response.data?.totalCost,
+      requesterName: response.data?.requesterName,
+      timeUpdated: new Date(response.data?.timeUpdated),
+      items: response.data?.lineItems.map((item: any) => ({
+        description: item.description,
+      })),
+    });
+    console.log("formatResponse", formatResponse);
+    return formatResponse;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to authenticate");

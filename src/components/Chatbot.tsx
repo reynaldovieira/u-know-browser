@@ -78,6 +78,7 @@ const handleRequiresAction = async (run: any): Promise<any> => {
           } else if (tool.function.name === "get_status_pr") {
             const args = JSON.parse(tool.function.arguments);
             const output = await PurchaseStatus({ pr: args.pr });
+            console.log(output);
             return {
               tool_call_id: tool.id,
               output,
