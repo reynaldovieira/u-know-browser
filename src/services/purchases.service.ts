@@ -18,8 +18,8 @@ export const PurchaseStatus = async ({ pr }: { pr: string }) => {
         maxBodyLength: Infinity,
       }
     );
-    console.log("response.data", response.data);
-    return response.data;
+    console.log("response.data", response);
+    return response.data.toString();
   } catch (error) {
     console.error(error);
     throw new Error("Failed to authenticate");
