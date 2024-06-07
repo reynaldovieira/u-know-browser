@@ -17,7 +17,6 @@ import { PurchaseRequest } from "../services/purchaseRequest.service";
 import { PurchaseStatus } from "../services/purchases.service";
 import { QualifyProvider } from "../services/providers.service";
 import "./Chatbot.scss";
-// import catalog from "../assets/base.json";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const openai = new OpenAI({
@@ -56,7 +55,7 @@ const createRun = async () => {
   });
 };
 
-const handleRequiresAction = async (run: any): Promise<any> => {
+const handleRequiresAction = async (run: any, t: any): Promise<any> => {
   if (
     run.required_action &&
     run.required_action.submit_tool_outputs &&
@@ -66,9 +65,7 @@ const handleRequiresAction = async (run: any): Promise<any> => {
       run.required_action.submit_tool_outputs.tool_calls.map(
         async (tool: any) => {
           if (tool.function.name === "finish_pr") {
-            addResponseMessage(
-              "Espere un momento mientras finalizamos la compra..."
-            );
+            addResponseMessage(t(`waitWhileIFinish`));
             const args = JSON.parse(tool.function.arguments);
             const output = (await PurchaseRequest(args.products))?.data;
             return {
@@ -129,24 +126,24 @@ const handleRequiresAction = async (run: any): Promise<any> => {
         { tool_outputs: toolOutputs }
       );
     }
-    return handleRunStatus(run);
+    return handleRunStatus(run, t);
   }
 };
 
-const handleRunStatus = async (run: any) => {
+const handleRunStatus = async (run: any, t: any) => {
   if (run.status === "completed") {
     return run;
   } else if (run.status === "requires_action") {
-    return await handleRequiresAction(run);
+    return await handleRequiresAction(run, t);
   }
 };
 
-const handleNewUserMessage = async (newMessage: string) => {
+const handleNewUserMessage = async (newMessage: string, t: any) => {
   toggleMsgLoader();
   await createOpenaiThreadIfNeeded();
   await addMessageToThread({ content: newMessage, role: "user" });
   let run = await createRun();
-  run = await handleRunStatus(run);
+  run = await handleRunStatus(run, t);
 
   if (run && run.status === "completed") {
     const messages: any = await openai.beta.threads.messages.list(
@@ -160,7 +157,7 @@ const handleNewUserMessage = async (newMessage: string) => {
       const response = assistantMessage.content[0].text.value;
       addResponseMessage(response);
     } else {
-      addResponseMessage("Desculpe, não entendi o que você quis dizer.");
+      addResponseMessage(t(`sorryCouldnUnderstand`));
     }
   }
   toggleMsgLoader();
@@ -342,17 +339,17 @@ const Chatbot = () => {
 
   useEffect(() => {
     addResponseMessage(t(`welcomeMessage`));
-  }, []);
+  }, [t]);
 
   const handleAudioMessage = (transcript: string) => {
     setAudioMessage(transcript);
     addUserMessage(transcript);
-    handleNewUserMessage(transcript);
+    handleNewUserMessage(transcript, t);
   };
 
   const handleImgMessage = (response: string) => {
     addUserMessage(response);
-    handleNewUserMessage(response);
+    handleNewUserMessage(response, t);
   };
 
   const cancelVoice = () => {
@@ -373,7 +370,7 @@ const Chatbot = () => {
       </div>
 
       <Widget
-        handleNewUserMessage={handleNewUserMessage}
+        handleNewUserMessage={(msg: string) => handleNewUserMessage(msg, t)}
         titleAvatar={logoUrl}
         senderPlaceHolder={t(`typeYourDoubt`)}
         subtitle=""

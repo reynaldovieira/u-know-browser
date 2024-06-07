@@ -4,13 +4,13 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 i18n
   // detect user language
-  // .use(LanguageDetector)
+  .use(LanguageDetector)
   // pass the i18n instance to react-i18next.
   .use(initReactI18next)
   // init i18next
   .init({
     debug: true,
-    fallbackLng: "es",
+    fallbackLng: "pt",
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
@@ -40,6 +40,8 @@ i18n
           tooManyMessages:
             "This conversation contains too many messages, please complete or cancel your order.",
           units: "units, ",
+          sorryCouldnUnderstand:
+            "Sorry, I couldn't understand you. Please try again.",
         },
       },
       pt: {
@@ -68,6 +70,8 @@ i18n
           tooManyMessages:
             "Essa conversa contém muitas mensagens, por favor conclua ou cancele seu pedido.",
           units: "unidades, ",
+          sorryCouldnUnderstand:
+            "Desculpe, não consegui entender você. Por favor, tente novamente.",
         },
       },
       es: {
@@ -96,6 +100,8 @@ i18n
           tooManyMessages:
             "Esta conversación contiene demasiados mensajes, por favor complete o cancele su pedido.",
           units: "unidades, ",
+          sorryCouldnUnderstand:
+            "Lo siento, no pude entenderte. Por favor, inténtalo de nuevo.",
         },
       },
     },
