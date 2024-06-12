@@ -15,6 +15,7 @@
   flex-direction: column !important;
   flex: 1 !important;
   justify-content: space-between !important;
+  max-height: 88% !important;
 }
 
 .rcw-messages-container {
@@ -25,7 +26,11 @@
 .rcw-response .rcw-message-text {
   max-width: 360px !important;
 }
-
+.rcw-launcher {
+  background-color: #ff6a00 !important;
+  height: 4rem !important;
+  min-height: 4rem !important;
+}
 #root {
   width: 100%;
   height: 100%;
