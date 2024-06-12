@@ -1,21 +1,29 @@
 .rcw-widget-container {
   max-width: 31rem !important;
+  display: flex !important;
+  height: 97% !important;
+  justify-content: end !important;
 }
 
 .rcw-message-img {
   max-width: 200px !important;
 }
+
 .rcw-conversation-container {
   min-width: 500px !important;
-}
-
-.rcw-response .rcw-message-text {
-  max-width: 360px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  justify-content: space-between !important;
 }
 
 .rcw-messages-container {
-  height: 120vh !important;
-  max-height: 520px !important;
+  flex: 1;
+  max-height: 100% !important;
+  height: 100% !important;
+}
+.rcw-response .rcw-message-text {
+  max-width: 360px !important;
 }
 
 #root {
