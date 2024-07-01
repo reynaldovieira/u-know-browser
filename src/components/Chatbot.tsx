@@ -52,7 +52,7 @@ const addMessageToThread = async ({
 
 const createRun = async () => {
   return await openai.beta.threads.runs.createAndPoll(thread.id, {
-    assistant_id: "asst_3pqSNOxNvaUFmQFfvX4rhIrh",
+    assistant_id: "asst_LUlE6pwP6sc3QYHrC1ZZ8Xin",
   });
 };
 

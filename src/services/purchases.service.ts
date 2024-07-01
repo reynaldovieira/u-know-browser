@@ -40,17 +40,18 @@ export const PurchaseList = async ({ date }: { date: string }) => {
   //converte a data no formato YYYY-MM-DD para timestamp
   date = new Date(date).getTime().toString();
   console.log("data convertida >", date);
-  let data = qs.stringify({
-    date: date,
-  });
+  // let data = qs.stringify({
+  //   date: date,
+  // });
 
+  let data = "";
   try {
     const response = await axios.post(
       "https://u-assist-func-middleware-ariba.azurewebsites.net/api/list-prs",
       data,
       {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "*",
         },
         maxBodyLength: Infinity,
       }
