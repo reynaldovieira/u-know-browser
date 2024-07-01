@@ -14,8 +14,9 @@ import SpeechRecognition, {
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { PurchaseRequest } from "../services/purchaseRequest.service";
-import { PurchaseStatus } from "../services/purchases.service";
+import { PurchaseStatus, PurchaseList } from "../services/purchases.service";
 import { QualifyProvider } from "../services/providers.service";
+import { ListApprovables } from "../services/approvables.service";
 import "./Chatbot.scss";
 
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -110,6 +111,23 @@ const handleRequiresAction = async (run: any, t: any): Promise<any> => {
                 " " +
                 JSON.stringify(output);
             }
+            return {
+              tool_call_id: tool.id,
+              output,
+            };
+          } else if (tool.function.name === "get_list_pr") {
+            const args = JSON.parse(tool.function.arguments);
+            console.log("args", args);
+            const output = await PurchaseList({ date: args.date });
+            console.log(output);
+            return {
+              tool_call_id: tool.id,
+              output,
+            };
+          } else if (tool.function.name === "get_list_approvables") {
+            const args = JSON.parse(tool.function.arguments);
+            const output = await ListApprovables();
+            console.log(output);
             return {
               tool_call_id: tool.id,
               output,
