@@ -66,7 +66,7 @@ const handleRequiresAction = async (run: any, t: any): Promise<any> => {
       run.required_action.submit_tool_outputs.tool_calls.map(
         async (tool: any) => {
           if (tool.function.name === "finish_pr") {
-            addResponseMessage(t(`waitWhileIFinish`));
+            // addResponseMessage(t(`waitWhileIFinish`));
             const args = JSON.parse(tool.function.arguments);
             const output = (await PurchaseRequest(args.products))?.data;
             return {
@@ -132,11 +132,20 @@ const handleRequiresAction = async (run: any, t: any): Promise<any> => {
               tool_call_id: tool.id,
               output,
             };
+          } else if (tool.function.name === "ask_to_wait") {
+            const args = JSON.parse(tool.function.arguments);
+            addResponseMessage(args.message);
+            const output = "ok";
+            return {
+              tool_call_id: tool.id,
+              output,
+            };
           }
         }
       );
 
     const toolOutputs = await Promise.all(toolOutputsPromises);
+
     if (toolOutputs.length > 0) {
       run = await openai.beta.threads.runs.submitToolOutputsAndPoll(
         thread.id,
